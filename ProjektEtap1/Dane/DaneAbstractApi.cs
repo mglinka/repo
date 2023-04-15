@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Dane
 {
-    internal class DaneAbstractApi
+    public abstract class DaneAbstractApi
     {
+        public static DaneAbstractApi CreateApi()
+        { return new DaneApi(); }
     }
+
+    internal class DaneApi : DaneAbstractApi { }
 }

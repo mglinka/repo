@@ -3,10 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:View"
+        xmlns:model="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+	<Window.DataContext>
+		<model:ViewModelApi/>
+	</Window.DataContext>
+	<Grid>
+		<Button BorderBrush="Purple" Width="190" Height="40"  FontSize="16
+                " Margin="577,32,33,362" Command="{Binding OnClickStartButton}">Start</Button>
+		<Label FontSize="16" Width="193" Height="30" Margin="574,163,33,241">Prosze podać liczbę kulek:</Label>
+		<TextBlock FontSize="16" Width="190" Margin="659,200,-49,154">10</TextBlock>
+		<Rectangle Width="510" Height="380" Stroke="Purple" Fill="Purple" Margin="30,27,260,27"></Rectangle>
+		<Rectangle Width="500" Height="370" Stroke="Purple" Fill="White" Margin="35,32,265,32"></Rectangle>
+		<Button BorderBrush="Purple" BorderThickness="5" Width="190" Height="40" Margin="574,99,36,295" FontSize="16">Stop</Button>
+		<ItemsControl ItemsSource="{Binding kulki}" Height="370" Margin="35,32,265,32" Width="500">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas/>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<Ellipse Width= "{Binding srednica}" Height="{Binding srednica}" Fill="Blue" Stroke="Black" />
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+			<ItemsControl.ItemContainerStyle>
+				<Style TargetType="ContentPresenter">
+					<Setter Property="Canvas.Top" Value="{Binding wspolrzednaX}" />
+					<Setter Property="Canvas.Left" Value="{Binding wspolrzednaY}" />
+				</Style>
+			</ItemsControl.ItemContainerStyle>
+		</ItemsControl>
+	</Grid>
 </Window>

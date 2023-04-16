@@ -1,4 +1,4 @@
-using TestDane;
+using Dane;
 
 namespace TestDane
 {

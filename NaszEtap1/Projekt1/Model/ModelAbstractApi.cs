@@ -22,7 +22,7 @@ namespace Model
         }
     }
 
-    internal class ModelApi : ModelAbstractApi, IDisposable
+    internal class ModelApi : ModelAbstractApi
     {
         private LogikaAbstractApi LogikaApi;
         private List<Kulka> kulki;
@@ -41,8 +41,7 @@ namespace Model
 
         public override void Start()
         {
-            System.Diagnostics.Trace.WriteLine("Jestem w start");
-            timer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(1000));
+            timer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(50));
         }
 
         public override void Stop()
@@ -50,10 +49,9 @@ namespace Model
             this.Dispose();
         }
 
-        public override void Move(object state) 
+        public override void Move(object state)
         {
             LogikaApi.poruszajKulkami();
-            System.Diagnostics.Trace.WriteLine("Kulki sie ruszaja");
             for (int i = 0; i < kulki.Count; i++)
             {
                 kulki[i].ruszKulka(LogikaApi.zwrocXkulki(i), LogikaApi.zwrocYkulki(i));

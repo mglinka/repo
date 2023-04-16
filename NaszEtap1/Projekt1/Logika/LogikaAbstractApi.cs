@@ -25,6 +25,8 @@ namespace Logika
         private Prostokat prostokat;
         private Random random = new Random();
         private DaneAbstractApi daneApi;
+        private int prdX;
+        private int prdY;
 
         public LogikaApi()
         {
@@ -34,13 +36,36 @@ namespace Logika
 
         public Prostokat getProstokat() { return prostokat; }
 
-        public override void tworzKule() 
+        public override void tworzKule()
         {
-            getProstokat().dodajKulke(new Kulka(random.Next(0, 360), random.Next(0, 490), random.Next(-3, 3), random.Next(1, 3)));
+            prdX = random.Next(2); //zero w gore jeden w dol
+            prdY = random.Next(2); //zero w lewo jeden w prawo
+            if(prdX == 0)
+            {
+                prdX = -1;
+            }
+            if(prdY == 0)
+            {
+                prdY = -1;
+            }
+            Console.WriteLine("X: " +  prdX);
+            getProstokat().dodajKulke(new Kulka(random.Next(10, 350), random.Next(10, 480), prdX, prdY));
         }
-        public override void poruszajKulkami() {
+        public override void poruszajKulkami()
+        {
             for (int i = 0; i < prostokat.getKulki().Count; i++)
             {
+                //Sprawdz kolizje na osi X 
+                if (prostokat.podajYKulki(i) == 0 || prostokat.podajYKulki(i) == 490)
+                {
+                    prostokat.getKulka(i).setWartoscPredkosciY(prostokat.getKulka(i).getWartoscPredkosciY() * (-1));
+                }
+
+                if (prostokat.podajXKulki(i) == 0 || prostokat.podajXKulki(i) == 360)
+                {
+                    prostokat.getKulka(i).setWartoscPredkosciX(prostokat.getKulka(i).getWartoscPredkosciX() * (-1));
+                }
+
                 prostokat.getKulka(i).zmienPolozenieKulki();
             }
         }

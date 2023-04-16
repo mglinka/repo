@@ -9,16 +9,10 @@ using Logika;
 
 namespace Model
 {
-    public interface Ikulka : INotifyPropertyChanged
-    {
-        int srednica { get; set; }
-        int wspolrzednaX { get; set; }
-        int wspolrzednaY { get; set; }
-    }
     public class Kulka : INotifyPropertyChanged
     {
         public int srednica { get; set; }
-        public int wspolrzednaX { get; set; }
+        private int wspolrzednaX;
         public int wspolrzednaY { get; set; }
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -40,7 +34,7 @@ namespace Model
             set
             {
                 wspolrzednaX = value;
-                OnPropertyChanged("wspX");
+                OnPropertyChanged();
             }
         }
 
@@ -51,7 +45,7 @@ namespace Model
             set
             {
                 wspolrzednaY = value;
-                OnPropertyChanged("wspY");
+                OnPropertyChanged();
             }
         }
 
@@ -62,8 +56,9 @@ namespace Model
 
         public void ruszKulka(int x, int y)
         {
-            this.wspolrzednaX = x;
-            this.wspolrzednaY = y;
+            wspX = x;
+            wspY = y;
+            //this.wspolrzednaY = y;
         }
 
     }

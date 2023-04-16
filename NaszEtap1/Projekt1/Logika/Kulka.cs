@@ -35,9 +35,8 @@ namespace Logika
 
         public void zmienPolozenieKulki()
         {
-            System.Diagnostics.Trace.WriteLine("Poruszylam sie");
-            setWspolrzednaX(getWspolrzednaX() + getWartoscPredkosciX());
-            setWspolrzednaY(getWspolrzednaY() + getWartoscPredkosciY());
+            setWspolrzednaX(wspolrzednaX + wartoscPredkosciX);
+            setWspolrzednaY(wspolrzednaY + wartoscPredkosciY);
         }
     }
 }

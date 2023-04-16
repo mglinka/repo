@@ -26,5 +26,9 @@ namespace Logika
         public void setDlugosc(int wys) { wysokosc = wys; }
         public void setSzerokosc(int szr) { szerokosc = szr; }
         public void dodajKulke(Kulka kulka) { kulki.Add(kulka); }
+        public int podajXKulki(int indeks) { return kulki[indeks].getWspolrzednaX(); }
+        public int podajYKulki(int indeks) { return kulki[indeks].getWspolrzednaY(); }
+        public int podajPredkoscXKulki(int indeks) { return kulki[indeks].getWartoscPredkosciX(); }
+        public int podajPredkoscYKulki(int indeks) { return kulki[indeks].getWartoscPredkosciY(); }
     }
 }

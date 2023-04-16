@@ -11,7 +11,7 @@
     </Window.DataContext>
     <Grid>
         <Button BorderBrush="Purple" Width="190" Height="40"  FontSize="16
-                " Margin="577,32,33,362" Command="{Binding OnClickStartButton}">Start</Button>
+                " Margin="577,32,33,362" Command="{Binding OnClickStartButton}" IsEnabled="{Binding IsStartEnabled}">Start</Button>
         <Label FontSize="16" Width="193" Height="30" Margin="571,87,36,317">Prosze podać liczbę kulek:</Label>
         <Rectangle Width="510" Height="380" Stroke="Purple" Fill="Purple" Margin="30,27,260,27"></Rectangle>
         <Rectangle Width="500" Height="370" Stroke="Purple" Fill="White" Margin="35,32,265,32"></Rectangle>

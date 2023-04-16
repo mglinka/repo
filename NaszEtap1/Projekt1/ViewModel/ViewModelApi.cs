@@ -31,7 +31,7 @@ namespace ViewModel
             set
             {
                 isStartEnabled = value;
-                OnPropertyChanged(nameof(isStartEnabled));
+                OnPropertyChanged();
             }
         }
 
@@ -57,6 +57,7 @@ namespace ViewModel
                 }
                 OnPropertyChanged(nameof(kulki));
                 modelApi.Start();
+                IsStartEnabled = false;
             }
         }
 

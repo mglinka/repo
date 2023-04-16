@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logika
 {
-    internal class Kulka
+    public class Kulka
     {
         private int wspolrzednaX;
         private int wspolrzednaY;

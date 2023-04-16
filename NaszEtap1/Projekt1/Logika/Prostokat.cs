@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logika
 {
-    internal class Prostokat
+    public class Prostokat
     {
         private int wysokosc;
         private int szerokosc;

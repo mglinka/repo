@@ -13,7 +13,6 @@ namespace Model
         public abstract Kulka tworzKule();
         public abstract void Move(object state);
         public abstract void Start();
-        public abstract void Stop();
 
 
         public static ModelAbstractApi CreateApi()
@@ -34,20 +33,13 @@ namespace Model
             this.kulki = new List<Kulka>();
         }
 
-        public void Dispose()
-        {
-            timer.Dispose();
-        }
+       
 
         public override void Start()
         {
             timer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(50));
         }
 
-        public override void Stop()
-        {
-            this.Dispose();
-        }
 
         public override void Move(object state)
         {

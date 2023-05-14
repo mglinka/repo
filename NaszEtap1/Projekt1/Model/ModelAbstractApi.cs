@@ -8,57 +8,98 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public abstract class ModelAbstractApi
+    public abstract class ModelAbstractApi : IObserver<int>
     {
-        public abstract Kulka tworzKule();
-        public abstract void Move(object state);
-        public abstract void Start();
-
+       // public abstract Kulka tworzKule();
+        public abstract void Start(int value);
 
         public static ModelAbstractApi CreateApi()
         {
             return new ModelApi();
         }
+
+        public abstract void OnCompleted();
+
+        public abstract void OnError(Exception error);
+
+        public abstract void OnNext(int value);
+
+        public abstract ModelKulka GetKulka(int index);
     }
 
     internal class ModelApi : ModelAbstractApi
     {
         private LogikaAbstractApi LogikaApi;
-        private List<Kulka> kulki;
-        private Timer timer;
+        private List<ModelKulka> kulki;
 
         public ModelApi()
         {
-            this.LogikaApi = LogikaAbstractApi.CreateApi();
-            this.kulki = new List<Kulka>();
+            this.LogikaApi = LogikaAbstractApi.CreateApi(DaneAbstractApi.CreateApi());
+            this.kulki = new List<ModelKulka>();
+            LogikaApi.Subscribe(this);
         }
 
-       
-
-        public override void Start()
+        public override ModelKulka GetKulka(int index)
         {
-            timer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(50));
+            return kulki[index];
         }
 
-
-        public override void Move(object state)
+        public override void OnCompleted()
         {
-            LogikaApi.poruszajKulkami();
-            for (int i = 0; i < kulki.Count; i++)
+            throw new NotImplementedException();
+        }
+
+        public override void OnError(Exception error)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void OnNext(int value)
+        {
+            kulki[value].wspX = LogikaApi.PodajXKulki(value);
+            kulki[value].wspY = LogikaApi.PodajYKulki(value);
+        }
+
+        public override void Start(int value)
+        {
+            if (value >= 1)
             {
-                kulki[i].ruszKulka(LogikaApi.zwrocXkulki(i), LogikaApi.zwrocYkulki(i));
+                LogikaApi.TworzKole(50, 300, 0.2f, 0.2f, 1, 25);
+                kulki.Add(new ModelKulka(50, 50, 300));
             }
-        }
-
-        public override Kulka tworzKule()
-        {
-            LogikaApi.tworzKule();
-            kulki.Add(new Kulka(10, LogikaApi.zwrocXkulki(LogikaApi.ileKulek() - 1), LogikaApi.zwrocYkulki(LogikaApi.ileKulek() - 1)));
-            if (kulki.Count > 0)
+            if (value >= 2)
             {
-                return kulki[kulki.Count - 1];
+                LogikaApi.TworzKole(50, 100, 0.2f, -0.2f, 1, 25);
+                kulki.Add(new ModelKulka(50, 50, 100));
             }
-            return kulki[0];
+            if (value >= 3)
+            {
+                LogikaApi.TworzKole(150, 250, -0.2f, 0.2f, 1, 25);
+                kulki.Add(new ModelKulka(50, 150, 250));
+            }
+            if (value >= 4)
+            {
+                LogikaApi.TworzKole(200, 150, 0.2f, 0.2f, 1, 25);
+                kulki.Add(new ModelKulka(50, 200, 150));
+            }
+            if (value == 5)
+            {
+                LogikaApi.TworzKole(300, 300, -0.2f, -0.2f, 1, 25);
+                kulki.Add(new ModelKulka(50, 300, 300));
+            }
+            /*
+            LogikaApi.TworzKole(50, 300, 0.2f, 0.2f, 1, 25); <
+            LogikaApi.TworzKole(50, 100, 0.2f, -0.2f, 1, 25); <
+            LogikaApi.TworzKole(150, 250, -0.2f, 0.2f, 1, 25); <
+            LogikaApi.TworzKole(200, 150, 0.2f, 0.2f, 1, 25); <
+            LogikaApi.TworzKole(300, 300, -0.2f, -0.2f, 1, 25); 
+            kulki.Add(new ModelKulka(50, 50, 300)); <
+            kulki.Add(new ModelKulka(50, 50, 100)); <
+            kulki.Add(new ModelKulka(50, 150, 250)); <
+            kulki.Add(new ModelKulka(50, 200, 150));
+            kulki.Add(new ModelKulka(50, 300, 300));
+            */
+
         }
     }
 }

@@ -9,14 +9,14 @@ using Logika;
 
 namespace Model
 {
-    public class Kulka : INotifyPropertyChanged
+    public class ModelKulka : INotifyPropertyChanged
     {
-        public int srednica { get; set; }
-        private int wspolrzednaX;
-        public int wspolrzednaY { get; set; }
+        public float srednica { get; }
+        public float wspolrzednaX { get; set; } //tu jako top - x
+        public float wspolrzednaY { get; set; } //tu jako top - y
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public Kulka(int srednica, int wspolrzednaX, int wspolrzednaY)
+        public ModelKulka(int srednica, int wspolrzednaX, int wspolrzednaY)
         {
             this.srednica = srednica;
             this.wspolrzednaX = wspolrzednaX;
@@ -28,7 +28,7 @@ namespace Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public int wspX
+        public float wspX
         {
             get { return wspolrzednaX; }
             set
@@ -39,7 +39,7 @@ namespace Model
         }
 
 
-        public int wspY
+        public float wspY
         {
             get { return wspolrzednaY; }
             set
@@ -49,12 +49,12 @@ namespace Model
             }
         }
 
-        public int srd
+        public float srd
         {
             get { return srednica; }
         }
 
-        public void ruszKulka(int x, int y)
+        public void ruszKulka(float x, float y)
         {
             wspX = x;
             wspY = y;

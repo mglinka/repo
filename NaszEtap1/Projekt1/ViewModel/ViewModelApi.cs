@@ -21,7 +21,7 @@ namespace ViewModel
         public string inputNumber;
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        public ObservableCollection<Kulka> kulki { get; set; } = new ObservableCollection<Kulka>();
+        public ObservableCollection<ModelKulka> kulki { get; set; } = new ObservableCollection<ModelKulka>();
 
         private ModelAbstractApi modelApi;
 
@@ -41,27 +41,28 @@ namespace ViewModel
             OnUpButton = new RelayCommand(() => UpButtonHandle());
             OnDownButton = new RelayCommand(() => DownButtonHandle());
             modelApi = ModelAbstractApi.CreateApi();
-            inputNumber = "100";
+            inputNumber = "5";
         }
 
         public void StartButtonHandle()
         {
             int value = getInputValue();
+            
             if (value > 0)
             {
-                //this.IsStartEnabled = false;
-                //this.IsStopEnabled = true;
+                OnPropertyChanged(nameof(kulki));
+                modelApi.Start(value);
                 for (int i = 0; i < value; i++)
                 {
-                    kulki.Add(modelApi.tworzKule());
+                    kulki.Add(modelApi.GetKulka(i));
                 }
-                OnPropertyChanged(nameof(kulki));
-                modelApi.Start();
+                //kulki.Add(modelApi.GetKulka(1));
                 IsStartEnabled = false;
             }
+            
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             //System.Diagnostics.Trace.WriteLine("Property changed");
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -73,7 +74,7 @@ namespace ViewModel
             get { return inputNumber; }
             set
             {
-                if (Int32.Parse(value) < 101 && Int32.Parse(value) > 0)
+                if (Int32.Parse(value) < 6 && Int32.Parse(value) > 0)
                     inputNumber = value;
                 OnPropertyChanged();
             }

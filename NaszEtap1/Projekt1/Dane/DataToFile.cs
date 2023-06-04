@@ -79,10 +79,10 @@ namespace Dane
     {
         public int id { get; set; }
         public float wsp_x { get; set; }
-        public float wspy { get; set; }
+        public float wsp_y { get; set; }
         public string czas { get; set; }
 
-        public DaneOKulce(int id, float wspx, float wspy)
+        public DaneOKulce(int id_, float wspx, float wspy)
         {
             id = id_;
             wsp_x = wspx;

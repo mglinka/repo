@@ -75,5 +75,20 @@ namespace Dane
         }
 
     }
-    ///yuuuuuu////
+    internal class DaneOKulce
+    {
+        public int id { get; set; }
+        public float wsp_x { get; set; }
+        public float wspy { get; set; }
+        public string czas { get; set; }
+
+        public DaneOKulce(int id, float wspx, float wspy)
+        {
+            id = id_;
+            wsp_x = wspx;
+            wsp_y = wspy;
+            czas = DateTime.Now.ToString("h:mm:ss tt");
+        }
+    }
+
 }

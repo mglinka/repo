@@ -17,6 +17,7 @@ namespace ViewModel
         public ICommand OnClickStartButton { get; set; }
         public ICommand OnUpButton { get; set; }
         public ICommand OnDownButton { get; set; }
+        public ICommand OnStopLogerButton { get; set; }
 
         public string inputNumber;
 
@@ -24,6 +25,11 @@ namespace ViewModel
         public ObservableCollection<ModelKulka> kulki { get; set; } = new ObservableCollection<ModelKulka>();
 
         private ModelAbstractApi modelApi;
+
+        public void LogerButtonHandle()
+        {
+            modelApi.ZakonczLogowanie();
+        }
 
         public bool IsStartEnabled
         {
@@ -37,6 +43,7 @@ namespace ViewModel
 
         public ViewModelApi()
         {
+            OnStopLogerButton = new RelayCommand(() => LogerButtonHandle());
             OnClickStartButton = new RelayCommand(() => StartButtonHandle());
             OnUpButton = new RelayCommand(() => UpButtonHandle());
             OnDownButton = new RelayCommand(() => DownButtonHandle());

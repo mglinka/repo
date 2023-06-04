@@ -25,6 +25,8 @@ namespace Model
         public abstract void OnNext(int value);
 
         public abstract ModelKulka GetKulka(int index);
+
+        public abstract void ZakonczLogowanie();
     }
 
     internal class ModelApi : ModelAbstractApi
@@ -37,6 +39,11 @@ namespace Model
             this.LogikaApi = LogikaAbstractApi.CreateApi(DaneAbstractApi.CreateApi());
             this.kulki = new List<ModelKulka>();
             LogikaApi.Subscribe(this);
+        }
+
+        public override void ZakonczLogowanie()
+        {
+            LogikaApi.zakonczLogowanie();
         }
 
         public override ModelKulka GetKulka(int index)
@@ -64,27 +71,27 @@ namespace Model
         {
             if (value >= 1)
             {
-                LogikaApi.TworzKole(50, 300, 0.2f, 0.2f, 1, 25);
+                LogikaApi.TworzKole(1, 50, 300, 0.2f, 0.2f, 1, 25);
                 kulki.Add(new ModelKulka(50, 50, 300));
             }
             if (value >= 2)
             {
-                LogikaApi.TworzKole(50, 100, 0.2f, -0.2f, 1, 25);
+                LogikaApi.TworzKole(2, 50, 100, 0.2f, -0.2f, 1, 25);
                 kulki.Add(new ModelKulka(50, 50, 100));
             }
             if (value >= 3)
             {
-                LogikaApi.TworzKole(150, 250, -0.2f, 0.2f, 1, 25);
+                LogikaApi.TworzKole(3, 150, 250, -0.2f, 0.2f, 1, 25);
                 kulki.Add(new ModelKulka(50, 150, 250));
             }
             if (value >= 4)
             {
-                LogikaApi.TworzKole(200, 150, 0.2f, 0.2f, 1, 25);
+                LogikaApi.TworzKole(4, 200, 150, 0.2f, 0.2f, 1, 25);
                 kulki.Add(new ModelKulka(50, 200, 150));
             }
             if (value == 5)
             {
-                LogikaApi.TworzKole(300, 300, -0.2f, -0.2f, 1, 25);
+                LogikaApi.TworzKole(5, 300, 300, -0.2f, -0.2f, 1, 25);
                 kulki.Add(new ModelKulka(50, 300, 300));
             }
             /*

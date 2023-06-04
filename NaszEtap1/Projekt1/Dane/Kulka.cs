@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Dane
 {
     public class Kulka : IKulka
     {
+        public override int ID { get; }
         public override Vector2 pozycja { get { return pozycja_; } } //x i y srodka
         public override Vector2 predkosc { get; set; }
         public override float Masa { get; }
@@ -42,14 +44,31 @@ namespace Dane
         {
             while(true) 
             {
-                System.Diagnostics.Trace.WriteLine(pozycja_);
-                // += predkosc;
+                //************************************************
+                //      s
+                // t = ----
+                //      v
+                // okreslamy minimalny krok 0.1 jaki mozna wykonac
+                // krok = 0.1
+                //
+                //************************************************
+                Stopwatch stoper = Stopwatch.StartNew();
+                float kroki = predkosc.Length() / 0.1f;
+                //pozycja_ += Vector2.Normalize(predkosc) * 0.2f;
                 foreach (var o in obserwatorzy)
                 {
                     o.OnNext(this);
                 }
-                pozycja_ += predkosc;
-                await Task.Delay(10);
+                stoper.Stop();
+                pozycja_ += Vector2.Normalize(predkosc) * 0.2f;
+                //obliczanie delaya
+                int spij = (int)(Convert.ToInt32(0.1f / kroki) - stoper.ElapsedMilliseconds );
+                if ((int)(Convert.ToInt32(0.1f / kroki)) == 0) {
+                    spij = 10;
+                }
+                //System.Diagnostics.
+                await Task.Delay(spij);
+                
             }
         }
 
@@ -59,12 +78,13 @@ namespace Dane
             return new Unsubscriber(obserwatorzy, observer);
         }
 
-        public Kulka(float gora, float lewo, float predkoscX, float predkoscY, float masa, float promien)  //lewo i gora sa powiazane z interfejsem graficznym
+        public Kulka(int id_, float gora, float lewo, float predkoscX, float predkoscY, float masa, float promien)  //lewo i gora sa powiazane z interfejsem graficznym
         {
             pozycja_ = new Vector2(lewo, gora);
             predkosc = new Vector2(predkoscX, predkoscY);
             Masa = masa; 
             Promien = promien;
+            ID = id_;
             obserwatorzy = new List<IObserver<IKulka>>();
             task = Task.Run(Rusz); 
         }

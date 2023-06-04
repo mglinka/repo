@@ -36,5 +36,6 @@
         </ItemsControl>
         <Button BorderBrush="Purple" BorderThickness="5" Width="50" Height="40" FontSize="16" Margin="704,135,46,259" Content="-1" Command="{Binding OnDownButton}"/>
         <Button BorderBrush="Purple" Width="190" Height="40"  FontSize="16                 " Margin="577,190,33,204"  Content="{Binding InputNumber}"/>
+        <Button BorderBrush="Purple" Width="190" Height="40"  FontSize="16                 " Margin="577,256,33,138" Command="{Binding OnStopLogerButton}" Content="Loger STOP" Click="Button_Click_1"/>
     </Grid>
 </Window>

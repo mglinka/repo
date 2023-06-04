@@ -14,7 +14,7 @@ namespace Logika
         {
             return new LogikaApi(api);
         }
-        public abstract void TworzKole(float x, float y, float prdX, float prdY, float masa, float promien);
+        public abstract void TworzKole(int id_, float x, float y, float prdX, float prdY, float masa, float promien);
 
         public abstract void OnCompleted();
 
@@ -25,6 +25,8 @@ namespace Logika
         public abstract IDisposable Subscribe(IObserver<int> observer);
         public abstract float PodajXKulki(int index);
         public abstract float PodajYKulki(int index);
+
+        public abstract void zakonczLogowanie();
     }
 
     internal class LogikaApi : LogikaAbstractApi
@@ -73,6 +75,7 @@ namespace Logika
         {
             lock (gate)
             {
+                daneApi.loguj(value);
                 int index = 0;
                 //pamietac spaeawdzic czy nie porownujemy z ta sama
                 if (value.pozycja.Y <= 0 || value.pozycja.Y >= 450)
@@ -119,9 +122,9 @@ namespace Logika
             return new Unsubscriber(obserwatorzy, observer);
         }
 
-        public override void TworzKole(float x, float y, float prdX, float prdY, float masa, float promien)
+        public override void TworzKole(int id_, float x, float y, float prdX, float prdY, float masa, float promien)
         {
-            daneApi.stworzKulke(x, y, prdX, prdY, masa, promien);
+            daneApi.stworzKulke(id_, x, y, prdX, prdY, masa, promien);
             daneApi.otrzymajKulke(daneApi.otrzymajLiczbeKulek() - 1).Subscribe(this);
         }
 
@@ -133,6 +136,11 @@ namespace Logika
         public override float PodajYKulki(int index)
         {
             return daneApi.otrzymajKulke(index).pozycja.Y;
+        }
+
+        public override void zakonczLogowanie()
+        {
+            daneApi.zakoncz();
         }
     }
 
